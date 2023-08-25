@@ -8,8 +8,14 @@ def dbstart():
     SENHA VARCHAR(20) NOT NULL
 );""")
 
-# def signup():
-
+def signup(login, senha):
+    con = mysql.connector.connect(host='localhost', database='users', user='root', password='')
+    cursor = con.cursor()
+    cursor.execute(f"INSERT INTO LOGIN VALUES('{login}', '{senha}');")
+    cursor.execute(f"SELECT * FROM LOGIN WHERE LOGIN = '{login}' AND SENHA = '{senha}';")
+    user = cursor.fetchone()
+    if user is not None:
+        print(f"Cadastro realizado com sucesso! Seja bem-vindo {login}.")
 
 def end():
     con.close()
