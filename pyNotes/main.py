@@ -29,6 +29,6 @@ while True:
             print('=-='*20)
             break
 
-print('Notas')
+print('notas')
 
 defs.end()

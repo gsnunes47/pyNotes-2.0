@@ -5,7 +5,8 @@ def dbstart():
     cursor = con.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS LOGIN(
 	LOGIN VARCHAR(20) NOT NULL PRIMARY KEY,
-    SENHA VARCHAR(20) NOT NULL
+    SENHA VARCHAR(20) NOT NULL,
+    NOTAS TEXT
 );""")
 
 def signup(login, senha):
@@ -14,7 +15,7 @@ def signup(login, senha):
     cursor.execute(f"SELECT * FROM LOGIN WHERE LOGIN = '{login}';")
     row = cursor.fetchone()
     if row == None:
-        cursor.execute(f"INSERT INTO LOGIN VALUES('{login}', '{senha}');")
+        cursor.execute(f"INSERT INTO LOGIN (LOGIN, SENHA) VALUES('{login}', '{senha}');")
         cursor.execute(f"SELECT * FROM LOGIN WHERE LOGIN = '{login}' AND SENHA = '{senha}';")
         user = cursor.fetchone()
         if user is not None:
@@ -47,6 +48,11 @@ def signin(login):
         print('Usuário não encontrado, faça o cadastro ou tente novamente.')
         return False
     return True
+
+def updatenotes(user, text):
+    con = mysql.connector.connect(host='localhost', database='users', user='root', password='')
+    cursor = con.cursor()
+    cursor.execute(f"UPDATE LOGIN SET NOTAS = '{text}' WHERE LOGIN = '{user}';")
 
 def end():
     con = mysql.connector.connect(host='localhost', database='users', user='root', password='')
