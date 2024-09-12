@@ -1,8 +1,9 @@
 import mysql.connector
 
+con = mysql.connector.connect(host='localhost', database='users', user='root', password='')
+cursor = con.cursor()
+
 def dbstart():
-    con = mysql.connector.connect(host='localhost', database='users', user='root', password='')
-    cursor = con.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS LOGIN(
 	LOGIN VARCHAR(20) NOT NULL PRIMARY KEY,
     SENHA VARCHAR(20) NOT NULL,
@@ -10,8 +11,6 @@ def dbstart():
 );""")
 
 def signup(login, senha):
-    con = mysql.connector.connect(host='localhost', database='users', user='root', password='')
-    cursor = con.cursor()
     cursor.execute(f"SELECT * FROM LOGIN WHERE LOGIN = '{login}';")
     row = cursor.fetchone()
     if row == None:
@@ -20,12 +19,11 @@ def signup(login, senha):
         user = cursor.fetchone()
         if user is not None:
             print(f"Cadastro realizado com sucesso! Seja bem-vindo {login}.")
+            return True
     else:
         print("Login já cadastrado, tente utilizar outro nome.")
 
 def signin(login):
-    con = mysql.connector.connect(host='localhost', database='users', user='root', password='')
-    cursor = con.cursor()
     cursor.execute(f"SELECT * FROM LOGIN WHERE LOGIN = '{login}';")
     user = cursor.fetchone()
     if user != None:
@@ -49,9 +47,11 @@ def signin(login):
         return False
     return True
 
+def shownotes(user):
+    cursor.execute(f"SELECT NOTAS FROM LOGIN WHERE LOGIN = '{user}'")
+    return cursor.fetchone()
+
 def updatenotes(user, text):
-    con = mysql.connector.connect(host='localhost', database='users', user='root', password='')
-    cursor = con.cursor()
     cursor.execute(f"UPDATE LOGIN SET NOTAS = '{text}' WHERE LOGIN = '{user}';")
 
 def end():

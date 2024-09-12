@@ -1,0 +1,4 @@
+sistema de login
+salvamento de notas publicas e privadas simbolos
+notas no perfil
+leve estilização (css)

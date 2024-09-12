@@ -18,17 +18,26 @@ while True:
     if choice == '1':
         login = str(input("Login: "))
         senha = str(input("Senha: "))
-        defs.signup(login, senha)
+        confirmacao = defs.signup(login, senha)   
         print('=-='*20)
     
     #Login
     if choice == '2':
         login = str(input("Login: "))
-        confirmação = defs.signin(login)
-        if confirmação == True:
+        confirmacao = defs.signin(login)
+        if confirmacao == True:
             print('=-='*20)
             break
-
-print('notas')
+    
+if confirmacao == True:
+    while True:
+        choice = str(input('Digite 1 para salvar novas notas, 2 para ver as notas salvas e 3 para sair.'))
+        if choice == '1':
+            notes = str(input("W: "))
+            defs.updatenotes(login, notes)
+        if choice == '2':
+            print(defs.shownotes(login))
+        if choice == '3':
+            break
 
 defs.end()
